@@ -10,10 +10,10 @@ const {
     getUserRatings,
 } = require('../controllers/ratingController');
 
-// GET /users - Get all users with their ratings stats
+// GET /users - Get all users with their ratings stats (MUST BE BEFORE /:id)
 router.get('/users', authenticateToken, getAllUsersWithRatings);
 
-// GET /users/:userId - Get specific user's ratings
+// GET /users/:userId - Get specific user's ratings (MUST BE BEFORE /:id)
 router.get('/users/:userId', authenticateToken, getUserRatings);
 
 // GET / - List user's ratings

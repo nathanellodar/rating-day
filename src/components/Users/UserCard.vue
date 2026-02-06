@@ -1,62 +1,62 @@
 <template>
   <div class="user-card bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-lg transition-all">
     <!-- Header -->
-    <div class="border-b border-gray-200 p-5 bg-gradient-to-r from-blue-50 to-transparent">
-      <div class="flex justify-between items-start mb-3">
-        <div>
-          <h3 class="text-lg font-bold text-gray-900">{{ user.username }}</h3>
-          <p class="text-sm text-gray-600">{{ user.ratingCount }} ratings</p>
+    <div class="border-b border-gray-200 p-4 sm:p-5 bg-gradient-to-r from-blue-50 to-transparent">
+      <div class="flex justify-between items-start mb-3 gap-2">
+        <div class="min-w-0">
+          <h3 class="text-base sm:text-lg font-bold text-gray-900 break-words">{{ user.username }}</h3>
+          <p class="text-xs sm:text-sm text-gray-600">{{ user.ratingCount }} ratings</p>
         </div>
-        <div class="text-right">
-          <div class="text-3xl font-bold text-blue-600">{{ user.averageScore }}</div>
-          <p class="text-xs text-gray-600">Avg Score</p>
+        <div class="text-right flex-shrink-0">
+          <div class="text-2xl sm:text-3xl font-bold text-blue-600">{{ user.averageScore }}</div>
+          <p class="text-xs text-gray-600">Avg</p>
         </div>
       </div>
     </div>
 
     <!-- Ratings List -->
-    <div class="max-h-96 overflow-y-auto">
+    <div class="max-h-64 sm:max-h-96 overflow-y-auto">
       <div v-if="user.ratings && user.ratings.length > 0" class="divide-y">
         <div
           v-for="rating in user.ratings"
           :key="rating.id"
-          class="p-4 hover:bg-gray-50 transition-colors"
+          class="p-3 sm:p-4 hover:bg-gray-50 transition-colors"
         >
-          <div class="flex justify-between items-start mb-2">
-            <div>
-              <p class="font-medium text-gray-900">{{ formatDate(rating.date) }}</p>
+          <div class="flex justify-between items-start mb-2 gap-2">
+            <div class="min-w-0">
+              <p class="text-xs sm:text-sm font-medium text-gray-900">{{ formatDate(rating.date) }}</p>
             </div>
-            <div class="flex items-center space-x-2">
-              <span class="text-lg">{{ getEmoji(rating.score) }}</span>
-              <span class="font-bold text-blue-600">{{ rating.score }}/10</span>
+            <div class="flex items-center space-x-1 flex-shrink-0">
+              <span class="text-base sm:text-lg">{{ getEmoji(rating.score) }}</span>
+              <span class="text-xs sm:text-sm font-bold text-blue-600 whitespace-nowrap">{{ rating.score }}/10</span>
             </div>
           </div>
-          <div v-if="rating.note" class="text-sm text-gray-700 text-left">
+          <div v-if="rating.note" class="text-xs sm:text-sm text-gray-700 text-left break-words">
             {{ truncateNote(rating.note) }}
           </div>
-          <div v-else class="text-sm text-gray-400 italic">
+          <div v-else class="text-xs sm:text-sm text-gray-400 italic">
             No note
           </div>
         </div>
       </div>
-      <div v-else class="p-4 text-center text-gray-400">
+      <div v-else class="p-3 sm:p-4 text-center text-gray-400 text-sm">
         No ratings yet
       </div>
     </div>
 
     <!-- Footer Stats -->
-    <div v-if="user.ratings && user.ratings.length > 0" class="border-t border-gray-200 p-4 bg-gray-50 grid grid-cols-3 gap-2 text-center">
-      <div>
+    <div v-if="user.ratings && user.ratings.length > 0" class="border-t border-gray-200 p-3 sm:p-4 bg-gray-50 grid grid-cols-3 gap-1 sm:gap-2 text-center">
+      <div class="min-w-0">
         <p class="text-xs text-gray-600">Highest</p>
-        <p class="font-bold text-green-600">{{ highestScore }}</p>
+        <p class="text-sm sm:text-base font-bold text-green-600">{{ highestScore }}</p>
       </div>
-      <div>
+      <div class="min-w-0">
         <p class="text-xs text-gray-600">Lowest</p>
-        <p class="font-bold text-orange-600">{{ lowestScore }}</p>
+        <p class="text-sm sm:text-base font-bold text-orange-600">{{ lowestScore }}</p>
       </div>
-      <div>
+      <div class="min-w-0">
         <p class="text-xs text-gray-600">Latest</p>
-        <p class="text-sm font-medium text-gray-900">{{ formatDate(user.latestRating.date) }}</p>
+        <p class="text-xs sm:text-sm font-medium text-gray-900 break-words">{{ formatDate(user.latestRating.date) }}</p>
       </div>
     </div>
   </div>
