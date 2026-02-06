@@ -182,10 +182,92 @@ const deleteRating = async (req, res) => {
     }
 };
 
+const getAllUsersWithRatings = async (req, res) => {
+    try {
+        const users = await User.findAll({
+            attributes: ['id', 'username'],
+            include: [{
+                model: Rating,
+                as: 'ratings',
+                attributes: ['id', 'date', 'score', 'note'],
+                order: [['date', 'DESC']],
+            }],
+            order: [['username', 'ASC']],
+        });
+
+        // Calculate stats for each user
+        const usersWithStats = users.map(user => {
+            const ratings = user.ratings || [];
+            const avgScore = ratings.length > 0 
+                ? (ratings.reduce((sum, r) => sum + r.score, 0) / ratings.length).toFixed(2)
+                : 0;
+            
+            return {
+                id: user.id,
+                username: user.username,
+                ratingCount: ratings.length,
+                averageScore: parseFloat(avgScore),
+                latestRating: ratings.length > 0 ? ratings[0] : null,
+                ratings: ratings,
+            };
+        });
+
+        res.json({ users: usersWithStats });
+    } catch (error) {
+        console.error('Get all users with ratings error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+const getUserRatings = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const { page = 1, limit = 20 } = req.query;
+        const offset = (page - 1) * limit;
+
+        const user = await User.findByPk(userId, {
+            attributes: ['id', 'username'],
+        });
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const { count, rows: ratings } = await Rating.findAndCountAll({
+            where: { userId: parseInt(userId) },
+            limit: parseInt(limit),
+            offset: parseInt(offset),
+            order: [['date', 'DESC']],
+        });
+
+        const avgScore = ratings.length > 0 
+            ? (ratings.reduce((sum, r) => sum + r.score, 0) / ratings.length).toFixed(2)
+            : 0;
+
+        res.json({
+            user: {
+                id: user.id,
+                username: user.username,
+                ratingCount: count,
+                averageScore: parseFloat(avgScore),
+            },
+            ratings,
+            total: count,
+            page: parseInt(page),
+            limit: parseInt(limit),
+        });
+    } catch (error) {
+        console.error('Get user ratings error:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
 module.exports = {
     getRatings,
     getRating,
     createRating,
     updateRating,
     deleteRating,
+    getAllUsersWithRatings,
+    getUserRatings,
 };

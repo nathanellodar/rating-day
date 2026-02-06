@@ -74,6 +74,31 @@
             </div>
           </router-link>
 
+          <router-link
+            to="/user-ratings"
+            class="bg-orange-600 text-white p-4 rounded-lg hover:bg-orange-700 transition-colors"
+          >
+            <div class="flex items-center">
+              <svg
+                class="w-6 h-6 mr-3"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 20h5v-2a3 3 0 00-5.856-1.487M15 10a3 3 0 11-6 0 3 3 0 016 0zM6 20a9 9 0 0118 0v2h2v-2a11 11 0 10-20 0v2h2v-2z"
+                />
+              </svg>
+              <div>
+                <h3 class="font-medium">User Ratings</h3>
+                <p class="text-sm opacity-90">See all user ratings</p>
+              </div>
+            </div>
+          </router-link>
+
           <div class="bg-purple-600 text-white p-4 rounded-lg">
             <div class="flex items-center">
               <svg

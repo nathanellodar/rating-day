@@ -26,6 +26,13 @@
             My Ratings
           </router-link>
           <router-link
+            to="/user-ratings"
+            class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+            :class="{ 'text-blue-600 bg-blue-50': $route.path.startsWith('/user-ratings') }"
+          >
+            User Ratings
+          </router-link>
+          <router-link
             to="/ratings/new"
             class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             :class="{ 'text-blue-600 bg-blue-50': $route.path === '/ratings/new' }"
@@ -97,6 +104,14 @@
             @click="isMenuOpen = false"
           >
             My Ratings
+          </router-link>
+          <router-link
+            to="/user-ratings"
+            class="block text-gray-700 hover:text-gray-900 hover:bg-gray-50 px-3 py-2 rounded-md text-base font-medium transition-colors"
+            :class="{ 'text-blue-600 bg-blue-50': $route.path.startsWith('/user-ratings') }"
+            @click="isMenuOpen = false"
+          >
+            User Ratings
           </router-link>
           <router-link
             to="/ratings/new"

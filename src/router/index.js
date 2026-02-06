@@ -5,6 +5,7 @@ import RegisterPage from '../views/RegisterPage.vue'
 import Dashboard from '../views/Dashboard.vue'
 import RatingFormPage from '../views/RatingFormPage.vue'
 import RatingsListPage from '../views/RatingsListPage.vue'
+import UserRatingsPage from '../views/UserRatingsPage.vue'
 
 const routes = [
     {
@@ -39,6 +40,12 @@ const routes = [
         path: '/ratings/new',
         name: 'RatingForm',
         component: RatingFormPage,
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/user-ratings',
+        name: 'UserRatings',
+        component: UserRatingsPage,
         meta: { requiresAuth: true }
     }
 ]

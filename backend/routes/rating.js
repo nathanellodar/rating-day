@@ -6,7 +6,15 @@ const {
     createRating,
     updateRating,
     deleteRating,
+    getAllUsersWithRatings,
+    getUserRatings,
 } = require('../controllers/ratingController');
+
+// GET /users - Get all users with their ratings stats
+router.get('/users', authenticateToken, getAllUsersWithRatings);
+
+// GET /users/:userId - Get specific user's ratings
+router.get('/users/:userId', authenticateToken, getUserRatings);
 
 // GET / - List user's ratings
 router.get('/', authenticateToken, getRatings);
